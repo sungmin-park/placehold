@@ -16,4 +16,4 @@ module.exports = (req, res, next) ->
   ctx.textBaseline = 'middle'
   ctx.fillText "#{width} x #{height}", width / 2, height / 2
   res.type('.png')
-  canvas.createJPEGStream().pipe res
+  canvas.createPNGStream().pipe res
