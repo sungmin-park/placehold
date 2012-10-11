@@ -6,7 +6,8 @@ require('coffee-script')
 var express = require('express')
   , routes = require('./routes')
   , http = require('http')
-  , path = require('path');
+  , path = require('path')
+  , gzippo = require('gzippo');
 
 var app = express();
 
@@ -19,7 +20,8 @@ app.configure(function(){
   app.use(express.bodyParser());
   app.use(express.methodOverride());
   app.use(app.router);
-  app.use(express.static(path.join(__dirname, 'public')));
+  app.use(gzippo.staticGzip(__dirname + '/public'));
+  app.use(gzippo.compress());
 });
 
 app.configure('development', function(){

@@ -1,4 +1,5 @@
-Canvas = require('canvas')
+require 'date-utils'
+Canvas = require 'canvas'
 
 module.exports = (req, res, next) ->
   [width, height] = [parseInt(req.params.width), parseInt(req.params.height)]
@@ -15,5 +16,7 @@ module.exports = (req, res, next) ->
   ctx.textAlign = 'center'
   ctx.textBaseline = 'middle'
   ctx.fillText "#{width} x #{height}", width / 2, height / 2
-  res.type('.png')
+  res.type '.png'
+  res.header 'Cache-Control', 'public, max-age=604800'
+  res.header 'Expires', Date.tomorrow()
   canvas.createPNGStream().pipe res

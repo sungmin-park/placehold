@@ -10,7 +10,9 @@
     "express": "*",
     "jade": "*",
     "coffee-script": "*",
-    "canvas": "git://github.com/elspoono/node-canvas-heroku.git#master"
+    "canvas": "git://github.com/elspoono/node-canvas-heroku.git#master",
+    "gzippo": "*",
+    "date-utils": "*"
   },
   
   "devDependencies": {
