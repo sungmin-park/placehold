@@ -4,6 +4,7 @@
  */
 require('coffee-script')
 var express = require('express')
+  , params = require('express-params')
   , routes = require('./routes')
   , http = require('http')
   , path = require('path')
@@ -22,6 +23,7 @@ app.configure(function(){
   app.use(app.router);
   app.use(gzippo.staticGzip(__dirname + '/public'));
   app.use(gzippo.compress());
+  params.extend(app);
 });
 
 app.configure('development', function(){
@@ -29,7 +31,22 @@ app.configure('development', function(){
 });
 
 app.get('/', routes.index);
-app.get('/:width([0-9]+)x:height([0-9]+)', routes.placehold)
+
+var dimensionRegex = /^[1-9]+\d{0,4}$/;
+var color = /^[a-f0-9]{6}|[a-f0-9]{3}$/i;
+
+app.param('size', dimensionRegex);
+app.param('width', dimensionRegex);
+app.param('height', dimensionRegex);
+app.param('fgColor', color);
+app.param('bgColor', color);
+
+app.get('/:size', routes.placehold);
+app.get('/:size/:bgColor', routes.placehold);
+app.get('/:size/:bgColor/:fgColor', routes.placehold);
+app.get('/(:width)x:height', routes.placehold);
+app.get('/(:width)x:height/:bgColor', routes.placehold);
+app.get('/(:width)x:height/:bgColor/:fgColor', routes.placehold);
 
 http.createServer(app).listen(app.get('port'), function(){
   console.log("Express server listening on port " + app.get('port'));
