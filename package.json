@@ -8,6 +8,7 @@
 
   "dependencies": {
     "express": "*",
+    "express-params": "*",
     "jade": "*",
     "coffee-script": "*",
     "canvas": "git://github.com/elspoono/node-canvas-heroku.git#master",
